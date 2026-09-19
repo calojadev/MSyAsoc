@@ -15,7 +15,7 @@ local_backend: true
 locale: es
 publish_mode: editorial_workflow
 media_folder: public/img/blog
-public_folder: /img/blog
+public_folder: /MSyAsoc/img/blog
 
 collections:
   - name: blog

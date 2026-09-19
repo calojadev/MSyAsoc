@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import ArticleCard from "./ArticleCard.astro";
+import { withBase } from "../config";
 
 const articles = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -25,7 +26,7 @@ const articles = (await getCollection("blog", ({ data }) => !data.draft))
         >
           {articles.map((article) => (
             <ArticleCard
-              href={`/blog/${article.id}`}
+              href={withBase(`/blog/${article.id}`)}
               title={article.data.title}
               excerpt={article.data.excerpt}
               date={article.data.date}
@@ -33,7 +34,7 @@ const articles = (await getCollection("blog", ({ data }) => !data.draft))
           ))}
         </div>
         <div class="teaser-footer reveal">
-          <a href="/blog" class="btn btn-ghost">
+          <a href={withBase("/blog")} class="btn btn-ghost">
             Ver todos los artículos
           </a>
         </div>

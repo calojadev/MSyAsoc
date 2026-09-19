@@ -1,5 +1,5 @@
 ---
-import { SITE } from "../config";
+import { SITE, withBase } from "../config";
 ---
 
 <section class="about" id="nosotros">
@@ -12,7 +12,7 @@ import { SITE } from "../config";
       <div class="about-img reveal">
         <!-- TODO: imagen de maqueta (stock). Slot ~3:2 — reemplazar por la imagen que defina el estudio. -->
         <img
-          src="/img/placeholder-nosotros.jpg"
+          src={withBase("/img/placeholder-nosotros.jpg")}
           alt="Balanza y mazo, elementos representativos del estudio jurídico"
           width="1600"
           height="1131"

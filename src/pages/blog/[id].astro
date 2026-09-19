@@ -1,7 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { bookingUrl } from "../../config";
+import { bookingUrl, withBase } from "../../config";
 
 export async function getStaticPaths() {
   const articles = await getCollection("blog", ({ data }) => !data.draft);
@@ -39,7 +39,9 @@ const formatted = new Intl.DateTimeFormat("es-PY", {
 
   <section>
     <div class="wrap article-layout">
-      <a class="article-back" href="/blog">← Volver a Actualidad legal</a>
+      <a class="article-back" href={withBase("/blog")}
+        >← Volver a Actualidad legal</a
+      >
       <p class="article-meta">
         <time datetime={article.data.date.toISOString()}>{formatted}</time>
         <span>·</span>

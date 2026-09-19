@@ -40,5 +40,11 @@ export const formspreeAction = PENDING.formspreeId
   ? `https://formspree.io/f/${PENDING.formspreeId}`
   : null;
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+/** Antepone el `base` de astro.config.mjs a una ruta interna (`/blog`, `/img/x.png`, `/#contacto`). */
+export const withBase = (path: string) =>
+  `${base}${path.startsWith("/") ? path : `/${path}`}`;
+
 /** Destino del botón "Agendar consulta" hasta que llegue el número real. */
-export const bookingUrl = whatsappUrl ?? "/#contacto";
+export const bookingUrl = whatsappUrl ?? withBase("/#contacto");

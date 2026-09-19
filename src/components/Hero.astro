@@ -1,12 +1,12 @@
 ---
-import { bookingUrl } from "../config";
+import { bookingUrl, withBase } from "../config";
 ---
 
 <section class="hero" id="top">
   <!-- TODO: imagen de maqueta. Reemplazar por la foto definitiva del estudio. -->
   <img
     class="hero-watermark"
-    src="/img/logo-watermark.png"
+    src={withBase("/img/logo-watermark.png")}
     alt=""
     width="680"
     height="355"
@@ -45,7 +45,7 @@ import { bookingUrl } from "../config";
         <span class="corner tl"></span>
         <!-- TODO: imagen de maqueta (stock). Slot 4:3 — reemplazar por la imagen que defina el estudio. -->
         <img
-          src="/img/placeholder-hero.jpg"
+          src={withBase("/img/placeholder-hero.jpg")}
           alt="Estatua de la justicia, símbolo del estudio MS &amp; Asociados"
           width="1400"
           height="1073"

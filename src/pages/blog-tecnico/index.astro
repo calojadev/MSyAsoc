@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
+import { withBase } from "../../config";
 
 const articles = (
   await getCollection("blog-tecnico", ({ data }) => !data.draft)
@@ -15,7 +16,7 @@ const articles = (
   <section class="page-hero">
     <img
       class="page-hero-watermark"
-      src="/img/logo-watermark.png"
+      src={withBase("/img/logo-watermark.png")}
       alt=""
       width="680"
       height="355"
@@ -42,7 +43,7 @@ const articles = (
           >
             {articles.map((article) => (
               <ArticleCard
-                href={`/blog-tecnico/${article.id}`}
+                href={withBase(`/blog-tecnico/${article.id}`)}
                 title={article.data.title}
                 excerpt={article.data.excerpt}
                 date={article.data.date}

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { CONTACT } from "../config";
+import { CONTACT, withBase } from "../config";
 ---
 
 <BaseLayout
@@ -10,7 +10,7 @@ import { CONTACT } from "../config";
   <section class="page-hero">
     <img
       class="page-hero-watermark"
-      src="/img/logo-watermark.png"
+      src={withBase("/img/logo-watermark.png")}
       alt=""
       width="680"
       height="355"

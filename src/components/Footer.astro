@@ -1,23 +1,23 @@
 ---
-import { CONTACT, SITE } from "../config";
+import { CONTACT, SITE, withBase } from "../config";
 
 const year = new Date().getFullYear();
 const links = [
-  { href: "/#nosotros", label: "Nosotros" },
-  { href: "/#areas", label: "Áreas" },
-  { href: "/blog", label: "Blog" },
-  { href: "/blog-tecnico", label: "Blog técnico" },
-  { href: "/simposios", label: "Simposios" },
-  { href: "/#contacto", label: "Contacto" },
+  { href: withBase("/#nosotros"), label: "Nosotros" },
+  { href: withBase("/#areas"), label: "Áreas" },
+  { href: withBase("/blog"), label: "Blog" },
+  { href: withBase("/blog-tecnico"), label: "Blog técnico" },
+  { href: withBase("/simposios"), label: "Simposios" },
+  { href: withBase("/#contacto"), label: "Contacto" },
 ];
 ---
 
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <a class="footer-brand" href="/">
+      <a class="footer-brand" href={withBase("/")}>
         <img
-          src="/img/logo-footer.png"
+          src={withBase("/img/logo-footer.png")}
           alt={SITE.legalName}
           style="height: 74px; width: auto"
           width="940"
