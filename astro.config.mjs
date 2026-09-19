@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap";
 const SITE = "https://msyasociados.pages.dev";
 
 export default defineConfig({
-  site: SITE,
+  site: "https://calojadev.github.io",
+  base: "/MSyAsoc",
   integrations: [sitemap()],
 });
