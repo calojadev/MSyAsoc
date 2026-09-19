@@ -13,5 +13,10 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.3"
-  }
+  },
+  "engines": {
+    "node": "24.19.0",
+    "npm": "11.17.0"
+  },
+  "packageManager": "npm@11.17.0"
 }
