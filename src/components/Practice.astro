@@ -1,0 +1,70 @@
+---
+// Orden deliberado: Laboral y Comercial abren la grilla por ser las áreas
+// prioritarias del estudio (definido en la entrevista con el titular).
+const areas = [
+  {
+    art: "Art. I",
+    title: "Derecho Laboral",
+    copy: "Asesoría preventiva para que las empresas eviten demandas: contratos, liquidaciones, cumplimiento normativo y defensa en conflictos laborales.",
+  },
+  {
+    art: "Art. II",
+    title: "Comercial y Corporativo",
+    copy: "Constitución de sociedades, contratos mercantiles, gobierno societario y asesoría corporativa continua.",
+  },
+  {
+    art: "Art. III",
+    title: "Civil y Daños Modernos",
+    copy: "Contratos, sucesiones y conflictos patrimoniales, con foco en la responsabilidad de compliance officers, administradores de sociedades y profesionales independientes.",
+  },
+  {
+    art: "Art. IV",
+    title: "Administrativo",
+    copy: "Intervenciones y gestiones ante entes del Estado, con seguimiento de plazos y recursos en cada instancia.",
+  },
+  {
+    art: "Art. V",
+    title: "Juicios diversos",
+    copy: "Sumarios administrativos, procesos aduaneros y litigios que no encuadran en un fuero único.",
+  },
+  {
+    art: "Art. VI",
+    title: "Derecho de Familia",
+    copy: "Divorcios, régimen de bienes, tenencia y sucesiones familiares.",
+  },
+  {
+    art: "Art. VII",
+    title: "Derecho Penal",
+    copy: "Defensa técnica en procesos penales y asesoría preventiva.",
+  },
+  {
+    art: "Art. VIII",
+    title: "Protección de Datos",
+    copy: "Adecuación a la Ley de Protección de Datos Personales y auditorías de cumplimiento.",
+  },
+];
+---
+
+<section class="practice" id="areas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Áreas de práctica</p>
+      <h2>Ocho frentes de trabajo, un mismo criterio.</h2>
+      <p style="grid-column: 2">
+        Cada área se gestiona con el mismo estándar: análisis documentado,
+        estrategia clara y comunicación constante con el cliente.
+      </p>
+    </div>
+  </div>
+  <div class="practice-grid reveal">
+    {
+      areas.map((area) => (
+        <div class="practice-card">
+          <span class="art">{area.art}</span>
+          <h3>{area.title}</h3>
+          <p>{area.copy}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,45 @@
+---
+// TODO (bloqueante): el estudio todavía no envió nombre, rol ni área de los
+// asociados. Hasta entonces se mantiene el monograma de iniciales acordado.
+const members = [
+  {
+    initials: "M.S.",
+    title: "Socia Fundadora",
+    role: "Derecho Civil & Comercial",
+    copy: "Lidera la estrategia general del estudio y la relación directa con los clientes de mayor complejidad.",
+  },
+  {
+    initials: "L.R.",
+    title: "Asociada Senior",
+    role: "Derecho de Familia & Sucesiones",
+    copy: "Acompaña procesos familiares y sucesorios con un enfoque cuidadoso de los tiempos de cada cliente.",
+  },
+  {
+    initials: "A.B.",
+    title: "Asociado",
+    role: "Derecho Laboral & Cumplimiento",
+    copy: "Gestiona conflictos laborales y procesos de adecuación normativa para empresas de distintos rubros.",
+  },
+];
+---
+
+<section class="team" id="equipo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">El equipo</p>
+      <h2>Criterio senior, disponible desde la primera consulta.</h2>
+    </div>
+  </div>
+  <div class="team-grid reveal">
+    {
+      members.map((member) => (
+        <div class="team-card">
+          <div class="avatar">{member.initials}</div>
+          <h3>{member.title}</h3>
+          <span class="role">{member.role}</span>
+          <p>{member.copy}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>

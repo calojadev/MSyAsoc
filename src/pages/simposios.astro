@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { CONTACT } from "../config";
+---
+
+<BaseLayout
+  title="Simposios y actividades académicas"
+  description="MS & Asociados prepara simposios y actividades académicas: espacios de escucha activa con profesionales reconocidos del país y del exterior."
+>
+  <section class="page-hero">
+    <img
+      class="page-hero-watermark"
+      src="/img/logo-watermark.png"
+      alt=""
+      width="680"
+      height="355"
+      aria-hidden="true"
+    />
+    <div class="wrap">
+      <p class="eyebrow">Simposios y actividades académicas</p>
+      <h1>Espacios de intercambio con quienes marcan el criterio.</h1>
+      <p class="lede">
+        Estamos organizando simposios con profesionales reconocidos del país y
+        del exterior: encuentros de escucha activa, pensados para que la
+        discusión técnica llegue a quienes ejercen todos los días.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="empty-state">
+        <span class="mark">Próximamente</span>
+        <h2>La primera edición está en preparación.</h2>
+        <p>
+          Todavía no hay fechas confirmadas. Cuando el calendario esté definido
+          publicaremos aquí el programa, los expositores y la forma de
+          inscripción. Si representa a una institución interesada en participar,
+          escríbanos a <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

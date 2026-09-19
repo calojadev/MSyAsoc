@@ -1,0 +1,137 @@
+---
+import { CONTACT, bookingUrl, calendarUrl, formspreeAction } from "../config";
+---
+
+<section class="contact" id="contacto">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <p class="eyebrow">Contacto</p>
+      <h2>Empecemos con su caso.</h2>
+      <p class="contact-lede">
+        Escríbanos y nos pondremos en contacto para coordinar una primera
+        consulta, sin costo, para entender su situación.
+      </p>
+
+      <div class="hero-actions">
+        <a href={bookingUrl} class="btn btn-on-dark">
+          {bookingUrl.startsWith("https") ? "Escribir por WhatsApp" : "Agendar consulta"}
+        </a>
+        {
+          /* TODO: el botón de calendario aparece recién cuando se defina la
+             herramienta (Calendly, Google Calendar, etc.) en src/config.ts */
+        }
+        {
+          calendarUrl && (
+            <a
+              href={calendarUrl}
+              class="btn btn-ghost-on-dark"
+              target="_blank"
+              rel="noopener"
+            >
+              Ver agenda disponible
+            </a>
+          )
+        }
+      </div>
+
+      <div class="contact-detail">
+        <span class="k">Dirección</span>
+        <span class="v">{CONTACT.address}</span>
+      </div>
+      <div class="contact-detail">
+        <span class="k">Teléfono</span>
+        <span class="v"><a href={CONTACT.phoneHref}>{CONTACT.phoneLabel}</a></span
+        >
+      </div>
+      <div class="contact-detail">
+        <span class="k">Correo</span>
+        <span class="v"
+          ><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></span
+        >
+      </div>
+    </div>
+
+    <form class="reveal" id="contactForm" method="POST" action={formspreeAction}>
+      <div class="form-field">
+        <label for="nombre">Nombre completo</label>
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          placeholder="Su nombre y apellido"
+          required
+        />
+      </div>
+      <div class="form-field">
+        <label for="email">Correo electrónico</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="nombre@correo.com"
+          required
+        />
+      </div>
+      <div class="form-field">
+        <label for="mensaje">Mensaje</label>
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          placeholder="Cuéntenos brevemente su caso"
+          required></textarea>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-on-dark"
+        style="width: 100%; justify-content: center"
+      >
+        Enviar mensaje
+      </button>
+      <p class="form-status" id="formStatus" role="status" hidden></p>
+    </form>
+  </div>
+</section>
+
+<script is:inline define:vars={{ email: CONTACT.email }}>
+  const form = document.getElementById("contactForm");
+  const status = document.getElementById("formStatus");
+  const button = form.querySelector("button[type=submit]");
+
+  const show = (message, ok) => {
+    status.textContent = message;
+    status.classList.toggle("is-ok", ok);
+    status.classList.toggle("is-error", !ok);
+    status.hidden = false;
+  };
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const action = form.getAttribute("action");
+    const fallback = `No pudimos enviar el mensaje. Escríbanos directamente a ${email}.`;
+
+    if (!action) {
+      show(fallback, false);
+      return;
+    }
+
+    button.disabled = true;
+    const original = button.textContent;
+    button.textContent = "Enviando…";
+
+    try {
+      const response = await fetch(action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.reset();
+      show("Mensaje enviado. Le responderemos a la brevedad.", true);
+    } catch {
+      show(fallback, false);
+    } finally {
+      button.disabled = false;
+      button.textContent = original;
+    }
+  });
+</script>

@@ -1,0 +1,80 @@
+---
+import { CONTACT, bookingUrl } from "../config";
+
+const links = [
+  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#areas", label: "Áreas" },
+  { href: "/blog", label: "Blog" },
+  { href: "/blog-tecnico", label: "Técnico" },
+  { href: "/simposios", label: "Simposios" },
+  { href: "/#contacto", label: "Contacto" },
+];
+---
+
+<header id="siteHeader">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <img src="/img/logoblanco.png" alt="Emblema MS &amp; Asociados" />
+      <span class="brand-word">MS &amp; Asociados<small>Abogados</small></span>
+    </a>
+    <nav id="siteNav" aria-label="Navegación principal">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-phone" href={CONTACT.phoneHref}>{CONTACT.phoneLabel}</a>
+      <a href={bookingUrl} class="btn nav-cta">Agendar consulta</a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="siteNav"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="nav-backdrop" hidden></div>
+
+<script>
+  const header = document.getElementById("siteHeader")!;
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle")!;
+  const backdrop = document.querySelector<HTMLElement>(".nav-backdrop")!;
+  const nav = document.getElementById("siteNav")!;
+
+  const setScrolled = () =>
+    header.classList.toggle("scrolled", window.scrollY > 40);
+  setScrolled();
+  window.addEventListener("scroll", setScrolled, { passive: true });
+
+  const closeNav = () => {
+    document.body.classList.remove("nav-open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir menú");
+    backdrop.hidden = true;
+  };
+
+  toggle.addEventListener("click", () => {
+    const open = document.body.classList.toggle("nav-open");
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    backdrop.hidden = !open;
+  });
+
+  backdrop.addEventListener("click", closeNav);
+  nav.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).closest("a")) closeNav();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeNav();
+  });
+</script>

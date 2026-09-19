@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import ArticleCard from "./ArticleCard.astro";
+
+const articles = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+{
+  articles.length > 0 && (
+    <section class="blog-teaser" id="blog">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Actualidad legal</p>
+          <h2>Lo que conviene saber, explicado en simple.</h2>
+          <p style="grid-column: 2">
+            Publicamos análisis breves sobre los cambios y criterios que afectan
+            a personas y empresas en Paraguay.
+          </p>
+        </div>
+        <div
+          class="article-grid reveal"
+          style={`--cols: ${Math.min(articles.length, 3)}`}
+        >
+          {articles.map((article) => (
+            <ArticleCard
+              href={`/blog/${article.id}`}
+              title={article.data.title}
+              excerpt={article.data.excerpt}
+              date={article.data.date}
+            />
+          ))}
+        </div>
+        <div class="teaser-footer reveal">
+          <a href="/blog" class="btn btn-ghost">
+            Ver todos los artículos
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,55 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const articles = await getCollection(
+    "blog-tecnico",
+    ({ data }) => !data.draft,
+  );
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+type Props = { article: CollectionEntry<"blog-tecnico"> };
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const formatted = new Intl.DateTimeFormat("es-PY", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(article.data.date);
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.excerpt}
+  type="article"
+  publishedTime={article.data.date}
+>
+  <section class="page-hero">
+    <div class="wrap article-layout">
+      <p class="eyebrow">Blog técnico</p>
+      <h1>{article.data.title}</h1>
+      <p class="lede">{article.data.excerpt}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap article-layout">
+      <a class="article-back" href="/blog-tecnico">← Volver al blog técnico</a>
+      <p class="article-meta">
+        <time datetime={article.data.date.toISOString()}>{formatted}</time>
+        <span>·</span>
+        <span>{article.data.author}</span>
+      </p>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

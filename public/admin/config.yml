@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: calojadev/MSyAsoc
+  branch: main
+  # Cloudflare Pages no tiene un servicio de identidad propio como Netlify,
+  # por eso el login de GitHub pasa por un Worker que hace de proxy OAuth.
+  # TODO: reemplazar por la URL del Worker una vez desplegado (ver README-DEPLOY.md).
+  base_url: https://TU-WORKER.workers.dev
+  auth_endpoint: auth
+
+# Solo se usa cuando el panel se abre desde localhost (con `npm run cms` corriendo):
+# edita los archivos del proyecto directo, sin GitHub ni Worker. En producción se ignora.
+local_backend: true
+
+locale: es
+publish_mode: editorial_workflow
+media_folder: public/img/blog
+public_folder: /img/blog
+
+collections:
+  - name: blog
+    label: Actualidad legal (divulgativo)
+    label_singular: artículo
+    description: >-
+      Artículos para clientes y público general. Lenguaje claro, sin jerga
+      jurídica. Compromiso del estudio: al menos dos publicaciones por mes.
+    folder: src/content/blog
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Título, widget: string }
+      - { name: date, label: Fecha, widget: datetime, format: "YYYY-MM-DD" }
+      - name: excerpt
+        label: Resumen
+        widget: text
+        hint: Dos o tres líneas. Es lo que se ve en la tarjeta del listado y en Google.
+      - { name: author, label: Autor, widget: string, default: "MS & Asociados" }
+      - { name: cover, label: Imagen de portada, widget: image, required: false }
+      - name: tags
+        label: Etiquetas
+        widget: list
+        required: false
+        default: []
+      - name: draft
+        label: Borrador
+        widget: boolean
+        default: true
+        hint: Mientras esté activado, el artículo no se publica en el sitio.
+      - { name: body, label: Contenido, widget: markdown }
+
+  - name: blog-tecnico
+    label: Blog técnico (para colegas)
+    label_singular: dictamen
+    description: >-
+      Material dirigido a abogados, académicos y organismos. Admite mayor
+      profundidad técnica y citas normativas.
+    folder: src/content/blog-tecnico
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Título, widget: string }
+      - { name: date, label: Fecha, widget: datetime, format: "YYYY-MM-DD" }
+      - name: excerpt
+        label: Resumen
+        widget: text
+        hint: Dos o tres líneas. Es lo que se ve en la tarjeta del listado y en Google.
+      - { name: author, label: Autor, widget: string, default: "MS & Asociados" }
+      - { name: cover, label: Imagen de portada, widget: image, required: false }
+      - name: tags
+        label: Etiquetas
+        widget: list
+        required: false
+        default: []
+      - name: draft
+        label: Borrador
+        widget: boolean
+        default: true
+        hint: Mientras esté activado, el dictamen no se publica en el sitio.
+      - { name: body, label: Contenido, widget: markdown }

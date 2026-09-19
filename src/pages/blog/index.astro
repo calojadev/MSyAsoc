@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+
+const articles = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<BaseLayout
+  title="Actualidad legal"
+  description="Análisis breves y en lenguaje claro sobre los cambios normativos y criterios judiciales que afectan a personas y empresas en Paraguay."
+>
+  <section class="page-hero">
+    <img
+      class="page-hero-watermark"
+      src="/img/logo-watermark.png"
+      alt=""
+      width="680"
+      height="355"
+      aria-hidden="true"
+    />
+    <div class="wrap">
+      <p class="eyebrow">Actualidad legal</p>
+      <h1>Lo que conviene saber, explicado en simple.</h1>
+      <p class="lede">
+        Escribimos para el público general: qué cambió, a quién afecta y qué
+        conviene hacer al respecto. Publicamos al menos dos veces por mes.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      {
+        articles.length > 0 ? (
+          <div
+            class="article-grid"
+            style={`--cols: ${Math.min(articles.length, 3)}`}
+          >
+            {articles.map((article) => (
+              <ArticleCard
+                href={`/blog/${article.id}`}
+                title={article.data.title}
+                excerpt={article.data.excerpt}
+                date={article.data.date}
+                level={2}
+              />
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <span class="mark">Próximamente</span>
+            <h2>Estamos preparando los primeros artículos.</h2>
+            <p>
+              Próximamente encontrará aquí análisis sobre novedades normativas y
+              criterios judiciales, en lenguaje claro.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

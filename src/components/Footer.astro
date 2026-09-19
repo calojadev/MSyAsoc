@@ -1,0 +1,46 @@
+---
+import { CONTACT, SITE } from "../config";
+
+const year = new Date().getFullYear();
+const links = [
+  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#areas", label: "Áreas" },
+  { href: "/blog", label: "Blog" },
+  { href: "/blog-tecnico", label: "Blog técnico" },
+  { href: "/simposios", label: "Simposios" },
+  { href: "/#contacto", label: "Contacto" },
+];
+---
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="footer-brand" href="/">
+        <img
+          src="/img/logo-footer.png"
+          alt={SITE.legalName}
+          style="height: 74px; width: auto"
+          width="940"
+          height="620"
+        />
+      </a>
+      <nav aria-label="Navegación del pie">
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {SITE.legalName}. Todos los derechos reservados.</span>
+      <span>
+        <a href={CONTACT.phoneHref}>{CONTACT.phoneLabel}</a> · {SITE.city}
+      </span>
+    </div>
+  </div>
+</footer>

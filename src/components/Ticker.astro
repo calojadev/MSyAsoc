@@ -1,0 +1,20 @@
+---
+const areas = [
+  "Derecho Laboral",
+  "Comercial y Corporativo",
+  "Civil y Daños Modernos",
+  "Administrativo",
+  "Juicios diversos",
+  "Derecho de Familia",
+  "Derecho Penal",
+  "Protección de Datos",
+];
+// Se repite la lista para que el desplazamiento infinito no corte.
+const track = [...areas, ...areas];
+---
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    {track.map((area) => <span>{area}</span>)}
+  </div>
+</div>

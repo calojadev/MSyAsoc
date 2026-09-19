@@ -1,0 +1,57 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { bookingUrl } from "../../config";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("blog", ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+type Props = { article: CollectionEntry<"blog"> };
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const formatted = new Intl.DateTimeFormat("es-PY", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(article.data.date);
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.excerpt}
+  type="article"
+  publishedTime={article.data.date}
+>
+  <section class="page-hero">
+    <div class="wrap article-layout">
+      <p class="eyebrow">Actualidad legal</p>
+      <h1>{article.data.title}</h1>
+      <p class="lede">{article.data.excerpt}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap article-layout">
+      <a class="article-back" href="/blog">← Volver a Actualidad legal</a>
+      <p class="article-meta">
+        <time datetime={article.data.date.toISOString()}>{formatted}</time>
+        <span>·</span>
+        <span>{article.data.author}</span>
+      </p>
+      <div class="prose">
+        <Content />
+      </div>
+      <div class="article-foot">
+        <span class="article-meta">¿Tiene un caso parecido?</span>
+        <a href={bookingUrl} class="btn btn-ghost">Agendar una consulta</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

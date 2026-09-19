@@ -1,0 +1,30 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  excerpt: string;
+  date: Date;
+  draft?: boolean;
+  /** 2 en las páginas de listado (no hay h2 arriba), 3 en el teaser del landing. */
+  level?: 2 | 3;
+}
+
+const { href, title, excerpt, date, draft = false, level = 3 } = Astro.props;
+const Heading = `h${level}` as "h2" | "h3";
+
+const formatted = new Intl.DateTimeFormat("es-PY", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+}).format(date);
+---
+
+<a class:list={["article-card", { "is-draft": draft }]} href={href}>
+  <span class="article-meta">
+    <time datetime={date.toISOString()}>{formatted}</time>
+    {draft && <span class="badge-draft">Borrador</span>}
+  </span>
+  <Heading>{title}</Heading>
+  <p>{excerpt}</p>
+  <span class="article-more">Leer</span>
+</a>
